@@ -1,8 +1,8 @@
 # Use the official Gradle image with OpenJDK
-FROM gradle:latest AS build
+FROM ubuntu:latest AS build
 
-# Set the working directory inside the container
-WORKDIR /app
+RUN apt-get update
+RUN apt-get install openjdk-21-jdk -y
 
 # Copy local code to the container image
 COPY . .
@@ -11,13 +11,10 @@ COPY . .
 RUN chmod +x gradlew
 
 # Build a release artifact with skipping tests
-RUN ./gradlew clean build -x test --no-daemon
+RUN ./gradlew bootJar --no-daemon
 
 # Use OpenJDK for runtime
 FROM openjdk:latest
-
-# Set the working directory inside the container
-WORKDIR /app
 
 # Expose port 9091
 EXPOSE 9091
