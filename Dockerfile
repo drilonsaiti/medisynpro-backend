@@ -8,7 +8,7 @@ RUN apk add --no-cache openjdk21
 COPY . .
 
 # Build a release artifact
-RUN ./gradlew bootJar --no-daemon
+RUN ./gradlew  --no-daemon
 
 # Use an Alpine Linux image with OpenJDK 21 for the runtime stage
 FROM alpine:latest
