@@ -11,7 +11,7 @@ COPY . .
 RUN chmod +x ./gradlew
 
 # Build a release artifact with skipping tests
-RUN ./gradlew clean build -x test --no-daemon
+RUN /gradlew clean build -x test --no-daemon
 
 # Use OpenJDK for runtime
 FROM openjdk:latest
