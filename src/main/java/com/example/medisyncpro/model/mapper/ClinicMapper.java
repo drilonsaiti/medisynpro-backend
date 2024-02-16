@@ -32,6 +32,7 @@ public class ClinicMapper {
                 clinic.getClinicId(),
                 clinic.getClinicName(),
                 clinic.getAddress(),
+                clinic.getEmailAddress(),
                 clinic.getSpecializations(),
                 services(clinic.getServices()),
                 clinic.getDoctors(),
