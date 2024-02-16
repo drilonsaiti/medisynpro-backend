@@ -11,7 +11,7 @@ COPY . .
 RUN chmod +x gradlew
 
 # Build a release artifact with skipping tests
-RUN gradlew clean build -x test --no-daemon
+RUN ./gradlew clean build -x test --no-daemon
 
 # Use OpenJDK for runtime
 FROM openjdk:latest
@@ -23,7 +23,7 @@ WORKDIR /app
 EXPOSE 9091
 
 # Copy the jar file from the build stage
-COPY --from=build /build/libs/MediSyncPro-1.jar app.jar
+COPY --from=build /app/build/libs/MediSyncPro-1.jar app.jar
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
