@@ -19,6 +19,8 @@ public class ClinicDto {
 
     private String email;
 
+    private String imageUrl;
+
     private Set<Specializations> specializations;
     private List<ServiceBySpecializationIdDto> serviceDto;
 
