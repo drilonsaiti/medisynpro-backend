@@ -1,6 +1,7 @@
 # Use the official Gradle image with OpenJDK
 FROM gradle:latest AS build
 
+RUN ./gradlew clean package -DskipTests
 # Set the working directory inside the container
 WORKDIR /app
 
