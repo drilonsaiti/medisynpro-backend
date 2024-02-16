@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/receptionists")
-@CrossOrigin
+@CrossOrigin(origins = "https://medisyncpro.vercel.app")
 public class ReceptionistRestController {
 
     private final ReceptionistService receptionistService;

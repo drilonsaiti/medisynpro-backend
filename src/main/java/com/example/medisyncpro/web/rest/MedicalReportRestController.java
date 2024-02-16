@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/medicalReports")
-@CrossOrigin
+@CrossOrigin(origins = "https://medisyncpro.vercel.app")
 public class MedicalReportRestController {
 
     private final MedicalReportService medicalReportService;

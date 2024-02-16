@@ -21,7 +21,7 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "https://medisyncpro.vercel.app")
 @AllArgsConstructor
 @RequestMapping("/api/users")
 public class UserController {

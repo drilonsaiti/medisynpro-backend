@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/appointments")
-@CrossOrigin
+@CrossOrigin(origins = "https://medisyncpro.vercel.app")
 public class AppointmentRestController {
 
     private final AppointmentService appointmentService;

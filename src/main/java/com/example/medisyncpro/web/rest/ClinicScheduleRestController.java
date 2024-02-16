@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/clinicSchedules")
-@CrossOrigin
+@CrossOrigin(origins = "https://medisyncpro.vercel.app")
 public class ClinicScheduleRestController {
 
     private final ClinicScheduleService clinicScheduleService;

@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/settings")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "https://medisyncpro.vercel.app")
 public class SettingsRestController {
 
     private final SettingsService settingsService;
