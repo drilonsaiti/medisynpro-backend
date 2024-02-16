@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.505s</div>
+<div class="counter">0.430s</div>
 <p>duration</p>
 </div>
 </td>
@@ -82,7 +82,7 @@
 </thead>
 <tr>
 <td class="success">contextLoads()</td>
-<td class="success">0.505s</td>
+<td class="success">0.430s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -90,8 +90,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>19:45:18.674 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.medisyncpro.MediSyncProApplicationTests]: MediSyncProApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-19:45:18.779 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.medisyncpro.MediSyncProApplication for test class com.example.medisyncpro.MediSyncProApplicationTests
+<pre>19:47:42.474 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.medisyncpro.MediSyncProApplicationTests]: MediSyncProApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:47:42.569 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.medisyncpro.MediSyncProApplication for test class com.example.medisyncpro.MediSyncProApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -101,25 +101,25 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.1)
 
-2024-02-16T19:45:19.105+01:00  INFO 19560 --- [    Test worker] c.e.m.MediSyncProApplicationTests        : Starting MediSyncProApplicationTests using Java 21.0.2 with PID 19560 (started by Drilon in C:\Users\Drilon\IdeaProjects\backend)
-2024-02-16T19:45:19.106+01:00  INFO 19560 --- [    Test worker] c.e.m.MediSyncProApplicationTests        : The following 1 profile is active: &quot;prod&quot;
-2024-02-16T19:45:19.706+01:00  INFO 19560 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-02-16T19:45:19.797+01:00  INFO 19560 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 84 ms. Found 12 JPA repository interfaces.
-2024-02-16T19:45:20.313+01:00  INFO 19560 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-02-16T19:45:20.385+01:00  INFO 19560 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
-2024-02-16T19:45:20.421+01:00  INFO 19560 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-02-16T19:45:20.647+01:00  INFO 19560 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-02-16T19:45:20.675+01:00  INFO 19560 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-02-16T19:45:22.661+01:00  INFO 19560 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@36871e98
-2024-02-16T19:45:22.662+01:00  INFO 19560 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-02-16T19:45:22.854+01:00  WARN 19560 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-02-16T19:45:23.336+01:00  WARN 19560 --- [    Test worker] o.h.boot.model.internal.EntityBinder     : HHH000136: Inapropriate use of @OnDelete on entity, annotation ignored: com.example.medisyncpro.model.Clinic
-2024-02-16T19:45:23.374+01:00  WARN 19560 --- [    Test worker] o.h.boot.model.internal.EntityBinder     : HHH000136: Inapropriate use of @OnDelete on entity, annotation ignored: com.example.medisyncpro.model.User
-2024-02-16T19:45:25.555+01:00  INFO 19560 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-02-16T19:45:31.513+01:00  INFO 19560 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-02-16T19:45:32.355+01:00  WARN 19560 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-02-16T19:45:32.796+01:00  INFO 19560 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@690113f0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@509e4d53, org.springframework.security.web.context.SecurityContextHolderFilter@1d642682, org.springframework.security.web.header.HeaderWriterFilter@704ca8a8, org.springframework.web.filter.CorsFilter@6f915016, org.springframework.security.web.authentication.logout.LogoutFilter@6527aa0, com.example.medisyncpro.config.JwtAuthenticationFilter@4e6add8d, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@738955e6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@321bf4b1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@598f6c93, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@533165e7, org.springframework.security.web.session.SessionManagementFilter@755057c7, org.springframework.security.web.access.ExceptionTranslationFilter@437a4e61, org.springframework.security.web.access.intercept.AuthorizationFilter@52d9a150]
-2024-02-16T19:45:33.188+01:00  INFO 19560 --- [    Test worker] c.e.m.MediSyncProApplicationTests        : Started MediSyncProApplicationTests in 14.277 seconds (process running for 15.26)
+2024-02-16T19:47:42.910+01:00  INFO 17032 --- [    Test worker] c.e.m.MediSyncProApplicationTests        : Starting MediSyncProApplicationTests using Java 21.0.2 with PID 17032 (started by Drilon in C:\Users\Drilon\IdeaProjects\backend)
+2024-02-16T19:47:42.912+01:00  INFO 17032 --- [    Test worker] c.e.m.MediSyncProApplicationTests        : The following 1 profile is active: &quot;prod&quot;
+2024-02-16T19:47:43.544+01:00  INFO 17032 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-02-16T19:47:43.628+01:00  INFO 17032 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 12 JPA repository interfaces.
+2024-02-16T19:47:44.152+01:00  INFO 17032 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-02-16T19:47:44.225+01:00  INFO 17032 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-02-16T19:47:44.259+01:00  INFO 17032 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-02-16T19:47:44.486+01:00  INFO 17032 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-02-16T19:47:44.513+01:00  INFO 17032 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-02-16T19:47:47.435+01:00  INFO 17032 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6533629
+2024-02-16T19:47:47.437+01:00  INFO 17032 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-02-16T19:47:47.628+01:00  WARN 17032 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-02-16T19:47:48.007+01:00  WARN 17032 --- [    Test worker] o.h.boot.model.internal.EntityBinder     : HHH000136: Inapropriate use of @OnDelete on entity, annotation ignored: com.example.medisyncpro.model.Clinic
+2024-02-16T19:47:48.043+01:00  WARN 17032 --- [    Test worker] o.h.boot.model.internal.EntityBinder     : HHH000136: Inapropriate use of @OnDelete on entity, annotation ignored: com.example.medisyncpro.model.User
+2024-02-16T19:47:48.789+01:00  INFO 17032 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-02-16T19:47:54.437+01:00  INFO 17032 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-02-16T19:47:55.255+01:00  WARN 17032 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-16T19:47:55.644+01:00  INFO 17032 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@690113f0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@509e4d53, org.springframework.security.web.context.SecurityContextHolderFilter@1d642682, org.springframework.security.web.header.HeaderWriterFilter@704ca8a8, org.springframework.web.filter.CorsFilter@6f915016, org.springframework.security.web.authentication.logout.LogoutFilter@6527aa0, com.example.medisyncpro.config.JwtAuthenticationFilter@d60aa4, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@738955e6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@321bf4b1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@598f6c93, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@533165e7, org.springframework.security.web.session.SessionManagementFilter@755057c7, org.springframework.security.web.access.ExceptionTranslationFilter@437a4e61, org.springframework.security.web.access.intercept.AuthorizationFilter@52d9a150]
+2024-02-16T19:47:55.968+01:00  INFO 17032 --- [    Test worker] c.e.m.MediSyncProApplicationTests        : Started MediSyncProApplicationTests in 13.258 seconds (process running for 14.266)
 </pre>
 </span>
 </div>
@@ -141,7 +141,7 @@ WARNING: Dynamic loading of agents will be disallowed by default in a future rel
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at Feb 16, 2024, 7:45:34 PM</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at Feb 16, 2024, 7:47:57 PM</p>
 </div>
 </div>
 </body>
