@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add/Edit Clinic</title>
+</head>
+
+<body>
+
+<h2>Add/Edit Clinic</h2>
+
+<form th:object="${clinic}" th:action="${'/clinics/save'}" method="post">
+
+    <input type="hidden" th:field="*{clinicId}"/>
+
+    <label>Clinic Name: </label>
+    <input type="text" th:field="*{clinicName}" required/><br/>
+
+    <label>Address: </label>
+    <input type="text" th:field="*{address}" required/><br/>
+
+    <label>Specializations: </label>
+    <select multiple="multiple" th:field="*{specializations}">
+        <option th:each="specializations : ${allSpecializations}" th:value="${specializations.specializationId}"
+                th:text="${specializations.specializationName}"></option>
+    </select><br/>
+
+    <label>Doctors: </label>
+    <div th:each="doctor : ${allDoctors}">
+        <input type="checkbox" th:field="*{doctors}" th:value="${doctor.doctorId}"/>
+        <label th:for="${'doctors-' + doctor.doctorId}" th:text="${doctor.doctorName}"></label><br/>
+    </div>
+
+    <!-- Add more input fields as needed -->
+
+    <button type="submit">Save Clinic</button>
+
+</form>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add/Edit Doctor</title>
+</head>
+
+<body>
+
+<h2>Add/Edit Doctor</h2>
+
+<form th:action="${action}" th:object="${doctor}" method="post">
+    <label for="doctorName">Doctor Name:</label>
+    <input type="text" id="doctorName" th:field="*{doctorName}"/>
+
+    <label for="specializations">Specialization:</label>
+    <input type="text" id="specializations" th:field="*{specializations}"/>
+
+    <label for="education">Education:</label>
+    <input type="text" id="education" th:field="*{education}"/>
+
+    <label for="clinic">Clinic:</label>
+    <select id="clinic" th:field="*{clinic}">
+        <option th:each="clinic : ${clinics}" th:value="${clinic.clinicId}" th:text="${clinic.clinicName}"></option>
+    </select>
+
+    <button type="submit">Save Doctor</button>
+</form>
+
+<a href="/doctors">Back to Doctors Listing</a>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Clinics Listing</title>
+</head>
+
+<body>
+
+<h2>Clinics Listing</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Clinic ID</th>
+        <th>Clinic Name</th>
+        <th>Address</th>
+        <th>Specializations</th>
+        <!-- Add more columns as needed -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="clinic : ${clinics}">
+        <td th:text="${clinic.clinicId}"></td>
+        <td th:text="${clinic.clinicName}"></td>
+        <td th:text="${clinic.address}"></td>
+        <td>
+            <ul th:each="spec : ${clinic.getSpecializations()}">
+                <li th:text="${spec.getSpecializationName()}"></li>
+            </ul>
+        </td>
+        <!-- Add more columns as needed -->
+        <td>
+            <a th:href="@{'/clinics/edit/' + ${clinic.clinicId}}">Edit</a>
+            <a th:href="@{'/clinics/delete/' + ${clinic.clinicId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/clinics/add">Add New Clinic</a>
+
+</body>
+
+</html>

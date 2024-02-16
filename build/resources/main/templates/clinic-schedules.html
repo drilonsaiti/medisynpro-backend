@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Clinic Schedules Listing</title>
+</head>
+
+<body>
+
+<h2>Clinic Schedules Listing</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Schedule ID</th>
+        <th>Doctor ID</th>
+        <th>Clinic ID</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Is Booked</th>
+        <!-- Add more columns as needed -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="clinicSchedule : ${clinicSchedules}">
+        <td th:text="${clinicSchedule.scheduleId}"></td>
+        <td th:text="${clinicSchedule.doctorId}"></td>
+        <td th:text="${clinicSchedule.clinicId}"></td>
+        <td th:text="${clinicSchedule.date}"></td>
+        <td th:text="${clinicSchedule.startTime}"></td>
+        <td th:text="${clinicSchedule.endTime}"></td>
+        <td th:text="${clinicSchedule.isBooked}"></td>
+        <!-- Add more columns as needed -->
+        <td>
+            <a th:href="@{'/clinic-schedules/edit/' + ${clinicSchedule.scheduleId}}">Edit</a>
+            <a th:href="@{'/clinic-schedules/delete/' + ${clinicSchedule.scheduleId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/clinic-schedules/add">Add New Clinic Schedule</a>
+
+</body>
+
+</html>

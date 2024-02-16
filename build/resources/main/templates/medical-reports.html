@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Medical Reports Listing</title>
+</head>
+
+<body>
+
+<h2>Medical Reports Listing</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Report ID</th>
+        <th>Patient ID</th>
+        <th>Doctor ID</th>
+        <th>Medicine Name</th>
+        <th>Quantity</th>
+        <th>Disease</th>
+        <th>Analyses</th>
+        <th>Next Appointment Date</th>
+        <th>No. of Days</th>
+        <th>Appointment Date</th>
+        <!-- Add more columns as needed -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="medicalReport : ${medicalReports}">
+        <td th:text="${medicalReport.reportId}"></td>
+        <td th:text="${medicalReport.patientId}"></td>
+        <td th:text="${medicalReport.doctorId}"></td>
+        <td th:text="${medicalReport.medicineName}"></td>
+        <td th:text="${medicalReport.quantity}"></td>
+        <td th:text="${medicalReport.disease}"></td>
+        <td th:text="${medicalReport.analyses}"></td>
+        <td th:text="${medicalReport.nextAppointmentDate}"></td>
+        <td th:text="${medicalReport.noOfDays}"></td>
+        <td th:text="${medicalReport.appointmentDate}"></td>
+        <!-- Add more columns as needed -->
+        <td>
+            <a th:href="@{'/medical-reports/edit/' + ${medicalReport.reportId}}">Edit</a>
+            <a th:href="@{'/medical-reports/delete/' + ${medicalReport.reportId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/medical-reports/add">Add New Medical Report</a>
+
+</body>
+
+</html>

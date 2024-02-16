@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Specializations Listing</title>
+</head>
+
+<body>
+
+<h2>Specializations Listing</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Specialization ID</th>
+        <th>Specialization Name</th>
+        <!-- Add more columns as needed -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="specializations : ${specializations}">
+        <td th:text="${specializations.specializationId}"></td>
+        <td th:text="${specializations.specializationName}"></td>
+        <!-- Add more columns as needed -->
+        <td>
+            <a th:href="@{'/specializations/edit/' + ${specializations.specializationId}}">Edit</a>
+            <a th:href="@{'/specializations/delete/' + ${specializations.specializationId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/specializations/add">Add New Specialization</a>
+
+</body>
+
+</html>

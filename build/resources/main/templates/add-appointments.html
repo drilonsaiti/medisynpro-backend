@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add/Edit Appointment</title>
+</head>
+
+<body>
+
+<h2>Add/Edit Appointment</h2>
+
+<form th:object="${appointment}" th:action="${'/appointments/save'}" method="post">
+
+    <input type="hidden" th:field="*{appointmentId}"/>
+
+    <label>Patient ID: </label>
+    <input type="text" th:field="*{patientId}" required/><br/>
+
+    <label>Doctor ID: </label>
+    <input type="text" th:field="*{doctorId}" required/><br/>
+
+    <label>Clinic ID: </label>
+    <input type="text" th:field="*{clinicId}" required/><br/>
+
+    <label>Date: </label>
+    <input type="text" th:field="*{date}" required/><br/>
+
+    <label>Time Slot: </label>
+    <input type="text" th:field="*{timeSlot}" required/><br/>
+
+    <label>Service ID: </label>
+    <input type="text" th:field="*{serviceId}" required/><br/>
+
+    <!-- Add more input fields as needed -->
+
+    <button type="submit">Save Appointment</button>
+
+</form>
+
+</body>
+
+</html>

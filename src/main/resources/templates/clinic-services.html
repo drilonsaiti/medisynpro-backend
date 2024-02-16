@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Services Listing</title>
+</head>
+
+<body>
+
+<h2>Services Listing</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Service ID</th>
+        <th>Service Name</th>
+        <th>Duration Minutes</th>
+        <th>Price</th>
+        <!-- Add more columns as needed -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="service : ${services}">
+        <td th:text="${service.serviceId}"></td>
+        <td th:text="${service.serviceName}"></td>
+        <td th:text="${service.durationMinutes}"></td>
+        <td th:text="${service.price}"></td>
+        <!-- Add more columns as needed -->
+        <td>
+            <a th:href="@{'/services/edit/' + ${service.serviceId}}">Edit</a>
+            <a th:href="@{'/services/delete/' + ${service.serviceId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/services/add">Add New Service</a>
+
+</body>
+
+</html>

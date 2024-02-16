@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Receptionists Listing</title>
+</head>
+
+<body>
+
+<h2>Receptionists Listing</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Receptionist ID</th>
+        <th>Receptionist Name</th>
+        <th>Email Address</th>
+        <th>Clinic ID</th>
+        <!-- Add more columns as needed -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="receptionist : ${receptionists}">
+        <td th:text="${receptionist.receptionistId}"></td>
+        <td th:text="${receptionist.receptionistName}"></td>
+        <td th:text="${receptionist.emailAddress}"></td>
+        <td th:text="${receptionist.clinic.clinicName}"></td>
+        <!-- Add more columns as needed -->
+        <td>
+            <a th:href="@{'/receptionists/edit/' + ${receptionist.receptionistId}}">Edit</a>
+            <a th:href="@{'/receptionists/delete/' + ${receptionist.receptionistId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/receptionists/add">Add New Receptionist</a>
+
+</body>
+
+</html>

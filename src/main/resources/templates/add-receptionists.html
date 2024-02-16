@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add/Edit Receptionist</title>
+</head>
+
+<body>
+
+<h2>Add/Edit Receptionist</h2>
+
+<form th:object="${receptionist}" th:action="${'/receptionists/save'}" method="post">
+
+    <input type="hidden" th:field="*{receptionistId}"/>
+
+    <label>Receptionist Name: </label>
+    <input type="text" th:field="*{receptionistName}" required/><br/>
+
+    <label>Email Address: </label>
+    <input type="text" th:field="*{emailAddress}" required/><br/>
+
+    <label>Clinic ID: </label>
+    <input type="text" th:field="*{clinicId}" required/><br/>
+
+    <!-- Add more input fields as needed -->
+
+    <button type="submit">Save Receptionist</button>
+
+</form>
+
+</body>
+
+</html>

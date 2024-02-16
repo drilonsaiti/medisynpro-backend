@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Appointments Listing</title>
+</head>
+
+<body>
+
+<h2>Appointments Listing</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Appointment ID</th>
+        <th>Patient ID</th>
+        <th>Doctor ID</th>
+        <th>Clinic ID</th>
+        <th>Date</th>
+        <th>Time Slot</th>
+        <th>Service ID</th>
+        <!-- Add more columns as needed -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.appointmentId}"></td>
+        <td th:text="${appointment.patientId}"></td>
+        <td th:text="${appointment.doctorId}"></td>
+        <td th:text="${appointment.clinicId}"></td>
+        <td th:text="${appointment.date}"></td>
+        <td th:text="${appointment.timeSlot}"></td>
+        <td th:text="${appointment.serviceId}"></td>
+        <!-- Add more columns as needed -->
+        <td>
+            <a th:href="@{'/appointments/edit/' + ${appointment.appointmentId}}">Edit</a>
+            <a th:href="@{'/appointments/delete/' + ${appointment.appointmentId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/appointments/add">Add New Appointment</a>
+
+</body>
+
+</html>
