@@ -21,6 +21,9 @@ public class Receptionist {
     @Column(name = "email_address")
     private String emailAddress;
 
+    @Column(name = "doctor_imageUrl")
+    private String imageUrl;
+
     @Column(name = "clinic_id")
     private Long clinicId;
 

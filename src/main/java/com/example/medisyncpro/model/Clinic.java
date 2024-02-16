@@ -33,6 +33,9 @@ public class Clinic {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "doctor_imageUrl")
+    private String imageUrl;
+
     @OneToMany
     private Set<Specializations> specializations;
 

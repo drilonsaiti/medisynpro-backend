@@ -3,9 +3,7 @@ package com.example.medisyncpro.service.impl;
 
 
 import com.example.medisyncpro.config.JwtService;
-import com.example.medisyncpro.model.Clinic;
-import com.example.medisyncpro.model.ClinicServices;
-import com.example.medisyncpro.model.User;
+import com.example.medisyncpro.model.*;
 import com.example.medisyncpro.model.dto.*;
 import com.example.medisyncpro.model.enums.Role;
 import com.example.medisyncpro.model.excp.*;
@@ -42,6 +40,10 @@ public class UserServiceImpl implements UserService {
     private final ClinicService clinicServices;
     private final PatientService patientService;
     private final ReceptionistService receptionistService;
+    private final ClinicRepository clinicRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
+    private final ReceptionistRepository receptionistRepository;
    // private JavaMailSender mailSender;
 
 
@@ -80,6 +82,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+
     @Override
     public User register(String fullName, String email, String password, String repeatPassword,String userType) throws Exception {
         if (email == null || email.isEmpty() || password == null || password.isEmpty())
@@ -115,19 +119,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(ChangePasswordDto change) {
-        System.out.println("===============CHANGE PASSWORD=================");
         User u = this.userRepository.findByEmail(jwtService.extractUsername(change.getToken())).orElseThrow(() -> new UsernameNotFoundException(jwtService.extractUsername(change.getToken())));
-        System.out.println(u);
-        System.out.println(change);
         if (passwordEncoder.matches(change.getOldPassword(), u.getPassword())) {
-            System.out.println("ITS EQUAL");
             if (change.getNewPassword().equals(change.getRepeatedPassword())) {
                 u.setPassword(passwordEncoder.encode(change.getNewPassword()));
             } else {
                 throw new PasswordsDoNotMatchException();
             }
         } else {
-            System.out.println("NOT EQUAL");
             throw new PasswordsDoNotMatchException();
 
         }
@@ -149,6 +148,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeAvatar(ChangeAvatarDto change) {
         User u = this.userRepository.findByEmail(jwtService.extractUsername(change.getToken())).orElseThrow(() -> new UsernameNotFoundException(jwtService.extractUsername(change.getToken())));
+
+        switch (u.getRole()){
+            case ROLE_OWNER ->{
+                Clinic c = this.clinicRepository.findByEmailAddress(u.getEmail());
+                c.setImageUrl(change.getAvatar());
+                this.clinicRepository.save(c);
+            }
+            case ROLE_DOCTOR -> {
+                Doctor d = this.doctorRepository.findByEmail(u.getEmail()).orElse(null);
+                d.setImageUrl(change.getAvatar());
+                this.doctorRepository.save(d);
+            }
+            case ROLE_PATIENT -> {
+                Patient p = this.patientRepository.findByEmail(u.getEmail());
+                p.setImageUrl(change.getAvatar());
+                this.patientRepository.save(p);
+            }
+            case ROLE_RECEPTIONIST -> {
+                Receptionist r = this.receptionistRepository.findByEmailAddress(u.getEmail()).orElse(null);
+                r.setImageUrl(change.getAvatar());
+                this.receptionistRepository.save(r);
+            }
+
+        }
         u.setImageUrl(change.getAvatar());
         this.userRepository.save(u);
     }

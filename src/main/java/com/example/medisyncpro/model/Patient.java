@@ -27,6 +27,9 @@ public class Patient {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "doctor_imageUrl")
+    private String imageUrl;
+
     @Column(name = "contact_number")
     private String contactNumber;
 

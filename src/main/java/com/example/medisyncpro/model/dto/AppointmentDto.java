@@ -26,6 +26,7 @@ public class AppointmentDto {
 
     private String doctorName;
     private String doctorSpecializations;
+    private String doctorImageUrl;
 
     private Long clinicId;
     private String clinicName;

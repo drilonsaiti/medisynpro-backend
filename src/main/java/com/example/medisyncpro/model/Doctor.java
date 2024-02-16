@@ -26,6 +26,9 @@ public class Doctor {
     @Column(name = "doctor_email")
     private String email;
 
+    @Column(name = "doctor_imageUrl")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "specialization_id")
     private Specializations specialization;

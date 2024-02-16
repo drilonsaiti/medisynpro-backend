@@ -53,6 +53,7 @@ public class AppointmentMapper {
                 patient.getBirthDay(),
                 doctor.getDoctorName(),
                 doctor.getSpecialization().getSpecializationName(),
+                doctor.getImageUrl(),
                 appm.getClinicId(),
                 clinicName,
                 appm.getDate(),
