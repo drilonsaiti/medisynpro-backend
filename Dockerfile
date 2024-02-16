@@ -1,5 +1,7 @@
 # Use the official Gradle image with OpenJDK-21
-FROM gradle:8.6-jdk21 AS build
+FROM ubuntu:lastest AS build
+RUN apt-get update
+RUN apt-get install openjdk-21-jdk -y
 
 # Copy local code to the container image
 COPY . .
