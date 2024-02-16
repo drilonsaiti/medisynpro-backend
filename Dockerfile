@@ -13,7 +13,7 @@ COPY . .
 RUN chmod +x ./gradlew
 
 # Build a release artifact
-RUN ./gradlew --no-daemon
+RUN ./gradlew bootJar --no-daemon
 
 # Use an Alpine Linux image with OpenJDK 21 for the runtime stage
 FROM alpine:latest
