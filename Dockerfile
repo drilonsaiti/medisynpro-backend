@@ -5,7 +5,7 @@ RUN apt-get install openjdk-21-jdk -y
 
 # Copy local code to the container image
 COPY . .
-
+RUN chmod +x ./gradlew
 # Build a release artifact
 RUN ./gradlew bootJar --no-daemon
 
