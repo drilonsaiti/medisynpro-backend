@@ -28,5 +28,7 @@ public interface DoctorService {
     void delete(Long id,String authHeader) throws Exception;
 
     void deleteDoctorFromClinic(Long id, Long clinicId,String authHeader) throws Exception;
+
+    Doctor getDoctorProfile(String authHeader) throws Exception;
 }
 

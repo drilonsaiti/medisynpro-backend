@@ -25,7 +25,7 @@ public interface AppointmentService {
 
     void delete(Long id,String authHeader) throws Exception;
 
-    List<AppointmentDateDto> getAppointmentDates(Long clinicId);
+    List<AppointmentDateDto> getAppointmentDates(String authHeader) throws Exception;
 
     Appointment createAppointmentByReceptionist(AppointmentByReceptionistDto dto,String authHeader) throws Exception;
 

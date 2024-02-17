@@ -237,7 +237,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<AppointmentDateDto> getAppointmentDates(Long clinicId) throws ClinicAppointmentException {
+    public List<AppointmentDateDto> getAppointmentDates(String authHeader) throws Exception {
+        Long clinicId = authHeaderService.getClinicId(authHeader);
         try {
             return this.appointmentRepository.findAllByClinicId(clinicId)
                     .stream()

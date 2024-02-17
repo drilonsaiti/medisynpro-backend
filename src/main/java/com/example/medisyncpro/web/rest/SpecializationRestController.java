@@ -1,13 +1,18 @@
 package com.example.medisyncpro.web.rest;
 
 import com.example.medisyncpro.model.Specializations;
+import com.example.medisyncpro.model.dto.AddSpecializationToClinicDto;
 import com.example.medisyncpro.model.dto.CreateSpecializationDto;
 import com.example.medisyncpro.model.excp.SpecializationException;
 import com.example.medisyncpro.service.SpecializationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -64,6 +69,31 @@ public class SpecializationRestController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (SpecializationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/clinic")
+    public ResponseEntity<?> getSpecializationByClinicId(HttpServletRequest request) {
+        try {
+            final String authHeader = request.getHeader("Authorization");
+            Set<Specializations> specialization = specializationService.getSpecializationByClinicId(authHeader);
+            return new ResponseEntity<>(specialization, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/addSpecializationToClinic")
+    public ResponseEntity<?> addSpecializationToClinic(@RequestBody List<AddSpecializationToClinicDto> dto, HttpServletRequest request) {
+
+        try {
+            final String authHeader = request.getHeader("Authorization");
+            specializationService.addSpecializationToClinic(dto,authHeader);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (SpecializationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

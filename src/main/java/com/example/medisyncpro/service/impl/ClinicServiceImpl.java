@@ -58,6 +58,13 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
+    public ClinicDto getByIdAuth(String authHeader) throws Exception {
+        Long clinicId = authHeaderService.getClinicId(authHeader);
+        Clinic clinic = this.getById(clinicId);
+        return clinicMapper.getClinicDto(clinic,null);
+    }
+
+    @Override
     public ClinicDto getMyProfile(String authHeader) {
         String email = this.authHeaderService.getEmail(authHeader);
         try {

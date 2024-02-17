@@ -18,4 +18,6 @@ public interface PatientService {
     Patient update(UpdatePatientDto patient,String authHeader) throws Exception;
 
     void delete(Long id,String authHeader) throws Exception;
+
+    Patient getPatientByEmailOrPhoneNumber(String emailOrPhoneNumber);
 }

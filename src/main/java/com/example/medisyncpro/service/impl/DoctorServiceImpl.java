@@ -200,4 +200,10 @@ public class DoctorServiceImpl implements DoctorService {
         }}
         throw new Exception("You don't have access!");
     }
+
+    @Override
+    public Doctor getDoctorProfile(String authHeader) throws Exception {
+        String email = this.authHeaderService.getEmail(authHeader);
+        return this.doctorRepository.findByEmail(email).orElse(null);
+    }
 }

@@ -142,4 +142,17 @@ public class DoctorRestController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getDoctorProfile(HttpServletRequest request) {
+        try {
+            final String authHeader = request.getHeader("Authorization");
+            Doctor doctor = doctorService.getDoctorProfile(authHeader);
+            return new ResponseEntity<>(doctor, HttpStatus.OK);
+        } catch (DoctorException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

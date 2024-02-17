@@ -119,13 +119,16 @@ public class AppointmentRestController {
         }
     }
 
-    @GetMapping("/dates/{clinicId}")
-    public ResponseEntity<?> getAppointmentDates(@PathVariable Long clinicId) {
+    @GetMapping("/dates")
+    public ResponseEntity<?> getAppointmentDates(HttpServletRequest request) {
         try {
-            Iterable<AppointmentDateDto> appointments = appointmentService.getAppointmentDates(clinicId);
+            final String authHeader = request.getHeader("Authorization");
+            Iterable<AppointmentDateDto> appointments = appointmentService.getAppointmentDates(authHeader);
             return new ResponseEntity<>(appointments, HttpStatus.OK);
         } catch (ClinicAppointmentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

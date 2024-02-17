@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
     private final ReceptionistRepository receptionistRepository;
+    private final SpecializationRepository specializationRepository;
    // private JavaMailSender mailSender;
 
 
@@ -112,8 +113,26 @@ public class UserServiceImpl implements UserService {
     public UserProfileDto findUserProfile(String email) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
 
-        return new UserProfileDto(user.getEmail(), user.getImageUrl(), user.getFullName());
 
+        if(user.getRole() == Role.ROLE_DOCTOR){
+            Doctor d = this.doctorRepository.findByEmail(user.getEmail()).orElse(null);
+            return new UserProfileDto(user.getEmail(), user.getImageUrl(), user.getFullName(),d.getEducation(),d.getSpecialization() != null ? d.getSpecialization().getSpecializationId() : null);
+        }
+
+        if(user.getRole() == Role.ROLE_PATIENT){
+            Patient p = this.patientRepository.findByEmail(user.getEmail());
+            return new UserProfileDto(user.getEmail(),user.getImageUrl(),user.getFullName(),p.getAddress(),p.getGender(),p.getContactNumber(),p.getBirthDay());
+        }
+
+        if(user.getRole() == Role.ROLE_OWNER){
+            Clinic c = this.clinicRepository.findByEmailAddress(user.getEmail());
+            return new UserProfileDto(user.getEmail(), user.getImageUrl(), c.getClinicName());
+        }
+
+        if(user.getRole() == Role.ROLE_RECEPTIONIST){
+            return new UserProfileDto(user.getEmail(), user.getImageUrl(), user.getFullName());
+        }
+        return null;
     }
 
 
@@ -137,14 +156,42 @@ public class UserServiceImpl implements UserService {
     public void changeFullName(ChangeFullNameDto change) {
         User u = this.userRepository.findByEmail(jwtService.extractUsername(change.getToken())).orElseThrow(() -> new UsernameNotFoundException(jwtService.extractUsername(change.getToken())));
         if (passwordEncoder.matches(change.getPassword(), u.getPassword())) {
-           u.setFullName(change.getFullName());
+
+            if(u.getRole() == Role.ROLE_DOCTOR){
+                Doctor d = this.doctorRepository.findByEmail(u.getEmail()).orElse(null);
+                u.setFullName(change.getFullName());
+                d.setDoctorName(change.getFullName());
+                d.setEducation(change.getEducation());
+                Specializations s = this.specializationRepository.findById(change.getSpecializations()).orElse(null);
+                d.setSpecialization(s);
+                doctorRepository.save(d);
+            }else if(u.getRole() == Role.ROLE_PATIENT){
+                Patient p = this.patientRepository.findByEmail(u.getEmail());
+                u.setFullName(change.getFullName());
+                p.setPatientName(change.getFullName());
+                p.setGender(change.getGender());
+                p.setAddress(change.getAddress());
+                p.setContactNumber(change.getContactNumber());
+                p.setBirthDay(change.getBirthDay());
+                this.patientRepository.save(p);
+            }else if(u.getRole() == Role.ROLE_RECEPTIONIST){
+                Receptionist r = this.receptionistRepository.findByEmailAddress(u.getEmail()).orElse(null);
+                r.setReceptionistName(change.getFullName());
+                u.setFullName(change.getFullName());
+                this.receptionistRepository.save(r);
+            }else{
+                Clinic c = clinicRepository.findByEmailAddress(u.getEmail());
+                c.setClinicName(change.getFullName());
+                c.setAddress(change.getAddress());
+                u.setFullName(change.getFullName());
+                this.clinicRepository.save(c);
+            }
         } else {
             throw new PasswordsDoNotMatchException();
 
         }
         this.userRepository.save(u);
     }
-
     @Override
     public void changeAvatar(ChangeAvatarDto change) {
         User u = this.userRepository.findByEmail(jwtService.extractUsername(change.getToken())).orElseThrow(() -> new UsernameNotFoundException(jwtService.extractUsername(change.getToken())));
@@ -194,9 +241,9 @@ public class UserServiceImpl implements UserService {
         if (!dto.getNewPassword().equals(dto.getRepeatedPassword())) {
             throw new PasswordsDoNotMatchException();
         }
-        if (!u.getVerifyCode().equals(dto.getVerifyCode())) {
+        /*if (!u.getVerifyCode().equals(dto.getVerifyCode())) {
             throw new VerificationCodeDoNotMatchException();
-        }
+        }*/
 
 
         u.setPassword(passwordEncoder.encode(dto.getNewPassword()));

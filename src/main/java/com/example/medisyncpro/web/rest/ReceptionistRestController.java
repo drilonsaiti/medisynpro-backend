@@ -2,10 +2,7 @@ package com.example.medisyncpro.web.rest;
 
 
 import com.example.medisyncpro.model.Receptionist;
-import com.example.medisyncpro.model.dto.AddDoctorToClinicDto;
-import com.example.medisyncpro.model.dto.AddReceptionistToClinicDto;
-import com.example.medisyncpro.model.dto.CreateReceptionistDto;
-import com.example.medisyncpro.model.dto.SearchReceptionistDto;
+import com.example.medisyncpro.model.dto.*;
 import com.example.medisyncpro.model.excp.DoctorException;
 import com.example.medisyncpro.model.excp.ReceptionistException;
 import com.example.medisyncpro.service.ClinicService;
@@ -106,11 +103,11 @@ public class ReceptionistRestController {
         }
     }
 
-    @PostMapping("/clinic/{id}")
-    public ResponseEntity<?> addDoctorToClinic(@PathVariable Long id, @RequestBody List<AddReceptionistToClinicDto> dto, HttpServletRequest request) {
+    @PostMapping("/addReceptionistToClinic")
+    public ResponseEntity<?> addReceptionistToClinic(@RequestBody List<AddReceptionistToClinicDto> dto, HttpServletRequest request) {
         try {
             final String authHeader = request.getHeader("Authorization");
-            receptionistService.addReceptionistToClinic(dto, id,authHeader);
+            receptionistService.addReceptionistToClinic(dto,authHeader);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DoctorException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -131,6 +128,17 @@ public class ReceptionistRestController {
             throw new RuntimeException(e);
         }
     }
-
+    @GetMapping("/profile")
+    public ResponseEntity<?> getReceptionistProfile(HttpServletRequest request) {
+        try {
+            final String authHeader = request.getHeader("Authorization");
+            ReceptionistDto patient = receptionistService.getReceptionistProfile(authHeader);
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        } catch (ReceptionistException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

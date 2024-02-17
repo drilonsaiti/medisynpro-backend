@@ -69,18 +69,17 @@ public class SettingsServiceImpl implements SettingsService {
     public SettingsDTO updateSettings(SettingsDTO dto, String authHeader) throws Exception {
         Long clinicIdAuth = this.authHeaderService.getClinicId(authHeader);
 
-        if (Objects.equals(dto.getClinicId(), clinicIdAuth)) {
         try {
-            Settings settings = settingsRepository.findById(dto.getId())
-                    .orElseThrow(() -> new SettingsException("Settings not found with id: " + dto.getId()));
+            Settings settings = settingsRepository.findByClinicId(clinicIdAuth)
+                    .orElseThrow(() -> new SettingsException("Settings not found with id: " + clinicIdAuth));
+
             Settings updatedSettings = settingsMapper.updateSettings(dto, settings);
             settingsRepository.save(updatedSettings);
             return dto;
         } catch (Exception e) {
             throw new SettingsException("Error updating settings", e);
         }
-        }
-        throw new ReceptionistException("You don't have access");
+
     }
 
     @Override

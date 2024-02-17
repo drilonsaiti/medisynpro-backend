@@ -56,9 +56,8 @@ public class SettingsRestController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateSettings(@PathVariable Long id, @RequestBody SettingsDTO settings,HttpServletRequest request) {
-        try {
+    @PutMapping("/update")
+    public ResponseEntity<?> updateSettings(@RequestBody SettingsDTO settings,HttpServletRequest request) {     try {
             final String authHeader = request.getHeader("Authorization");
             SettingsDTO updatedSettings = settingsService.updateSettings(settings,authHeader);
             return new ResponseEntity<>(updatedSettings, HttpStatus.OK);

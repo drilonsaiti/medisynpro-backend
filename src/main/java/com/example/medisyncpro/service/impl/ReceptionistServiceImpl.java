@@ -142,16 +142,16 @@ public class ReceptionistServiceImpl implements ReceptionistService {
 
 
     @Override
-    public void addReceptionistToClinic(List<AddReceptionistToClinicDto> dto, Long clinicId, String authHeader) throws Exception {
+    public void addReceptionistToClinic(List<AddReceptionistToClinicDto> dto, String authHeader) throws Exception {
         Long clinicIdAuth = this.authHeaderService.getClinicId(authHeader);
 
-        if (Objects.equals(clinicId, clinicIdAuth)) {
+
             try {
 
                 for (AddReceptionistToClinicDto add : dto) {
                     Receptionist receptionist = receptionistRepository.findByEmailAddress(add.getEmail())
                             .orElseThrow(() -> new ReceptionistException(String.format("Doctor with email: %s not found", add.getEmail())));
-                    Clinic clinic = clinicRepository.findByClinicId(clinicId).orElseThrow(() -> new ClinicException(String.format("Clinic with id: %d not found", clinicId)));
+                    Clinic clinic = clinicRepository.findByClinicId(clinicIdAuth).orElseThrow(() -> new ClinicException(String.format("Clinic with id: %d not found", clinicIdAuth)));
 
 
                     receptionist.setClinicId(clinic.getClinicId());
@@ -162,6 +162,15 @@ public class ReceptionistServiceImpl implements ReceptionistService {
             } catch (Exception e) {
                 throw new ReceptionistException("Error adding doctor to clinic: " + e.getMessage());
             }
-        }
+    }
+
+    @Override
+    public ReceptionistDto getReceptionistProfile(String authHeader) throws Exception {
+        String email = this.authHeaderService.getEmail(authHeader);
+        return this.receptionistRepository.findByEmailAddress(email).map(receptionist -> {
+            Clinic clinic = clinicRepository.findByClinicId(receptionist.getClinicId()).orElseThrow(() -> new ClinicException(String.format("Clinic with id: %d not found", receptionist.getClinicId())));
+            String clinicName = clinic != null ? clinic.getClinicName() : "Unemployed";
+            return receptionistMapper.getReceptionistById(receptionist, clinicName);
+        }).orElse(null);
     }
 }

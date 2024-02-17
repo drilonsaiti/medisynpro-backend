@@ -96,4 +96,15 @@ public class PatientRestController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping("/findPatient/{email}")
+    public ResponseEntity<?> getPatientByEmailOrPhoneNumber(@PathVariable String email) {
+        try {
+
+            Patient patient = patientService.getPatientByEmailOrPhoneNumber(email);
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        } catch (PatientException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }

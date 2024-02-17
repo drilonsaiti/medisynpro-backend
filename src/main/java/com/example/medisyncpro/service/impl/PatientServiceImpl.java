@@ -58,7 +58,7 @@ public class PatientServiceImpl implements PatientService {
     public Patient save(CreatePatientDto patient){
         try {
             if (patientRepository.existsPatientByEmail(patient.getEmail())) {
-                throw new PatientException("The patient already exists with this email");
+                return this.patientRepository.findByEmail(patient.getEmail());
             }
             return patientRepository.save(patientMapper.createPatient(patient));
         } catch (Exception e) {
@@ -98,5 +98,17 @@ public class PatientServiceImpl implements PatientService {
     public Patient getPatientProfile(String authHeader) {
         String email = authHeaderService.getEmail(authHeader);
         return patientRepository.findByEmail(email);
+    }
+
+    @Override
+    public Patient getPatientByEmailOrPhoneNumber(String emailOrPhoneNumber) {
+
+        Patient patient = this.patientRepository.findByEmailOrContactNumber(emailOrPhoneNumber,emailOrPhoneNumber);
+
+        if (patient == null)
+            return null;
+
+        return patient;
+
     }
 }
