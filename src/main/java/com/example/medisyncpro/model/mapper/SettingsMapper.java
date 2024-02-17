@@ -8,6 +8,7 @@ import com.example.medisyncpro.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,27 +50,33 @@ public class SettingsMapper {
     }
 
     public Settings updateSettings(SettingsDTO dto, Settings settings) {
-        settings.setId(dto.getId());
-        settings.setClinicId(dto.getClinicId());
         settings.setMorningStartTime(dto.getMorningStartTime());
         settings.setMorningEndTime(dto.getMorningEndTime());
         settings.setAfternoonStartTime(dto.getAfternoonStartTime());
         settings.setAfternoonEndTime(dto.getAfternoonEndTime());
         settings.setAppointmentDurationMinutes(dto.getAppointmentDurationMinutes());
         settings.setDaysToGenerate(dto.getDaysToGenerate());
+        List<Doctor> morningDoctors = new ArrayList<>();
+        if (!settings.getMorningDoctors().isEmpty() || !dto.getMorningDoctors().isEmpty()) {
+            settings.getMorningDoctors().clear();
+            morningDoctors = dto.getMorningDoctors().stream()
+                    .filter(doc -> doc.getDoctorId() != null)
+                    .map(doc -> doctorService.getById(doc.getDoctorId()))
+                    .toList();
+        }
 
-        settings.getMorningDoctors().clear();
-        List<Doctor> morningDoctors = dto.getMorningDoctors().stream()
-                .filter(doc -> doc.getDoctorId() != null)
-                .map(doc -> doctorService.getById(doc.getDoctorId()))
-                .toList();
         settings.getMorningDoctors().addAll(morningDoctors);
 
-        settings.getAfternoonDoctors().clear();
-        List<Doctor> afternoonDoctors = dto.getAfternoonDoctors().stream()
-                .filter(doc -> doc.getDoctorId() != null)
-                .map(doc -> doctorService.getById(doc.getDoctorId()))
-                .toList();
+        List<Doctor> afternoonDoctors = new ArrayList<>();
+        if (!settings.getAfternoonDoctors().isEmpty() || !dto.getAfternoonDoctors().isEmpty()) {
+            settings.getAfternoonDoctors().clear();
+            afternoonDoctors = dto.getAfternoonDoctors().stream()
+                    .filter(doc -> doc.getDoctorId() != null)
+                    .map(doc -> doctorService.getById(doc.getDoctorId()))
+                    .toList();
+        }
+
+
         settings.getAfternoonDoctors().addAll(afternoonDoctors);
 
         return settings;

@@ -7,7 +7,6 @@ import com.example.medisyncpro.model.Settings;
 import com.example.medisyncpro.model.dto.ClinicDto;
 import com.example.medisyncpro.model.dto.ServiceBySpecializationIdDto;
 import com.example.medisyncpro.model.dto.UpdateClinicDto;
-import com.example.medisyncpro.repository.UserRepository;
 import com.example.medisyncpro.service.ClinicServicesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.util.List;
 public class ClinicMapper {
 
     private final ClinicServicesService service;
-    private final UserRepository userRepository;
 
     private List<ServiceBySpecializationIdDto> services(List<ClinicServices> services) {
 
@@ -30,18 +28,17 @@ public class ClinicMapper {
     }
 
     public ClinicDto getClinicDto(Clinic clinic, Settings settings) {
-        String imageUrl = userRepository.findByEmail(clinic.getEmailAddress()).get().getImageUrl();
         return new ClinicDto(
                 clinic.getClinicId(),
                 clinic.getClinicName(),
-                clinic.getAddress(),
                 clinic.getEmailAddress(),
-                imageUrl,
+                clinic.getAddress(),
+                clinic.getImageUrl(),
                 clinic.getSpecializations(),
                 services(clinic.getServices()),
                 clinic.getDoctors(),
-                settings != null ? settings.getMorningStartTime().toString() + "-" + settings.getMorningEndTime() : null,
-                settings != null ? settings.getAfternoonStartTime().toString() + "-" + settings.getAfternoonEndTime() : null
+                settings != null && settings.getMorningStartTime() != null ? settings.getMorningStartTime().toString() + "-" + settings.getMorningEndTime() : null,
+                settings != null && settings.getAfternoonStartTime() != null ? settings.getAfternoonStartTime().toString() + "-" + settings.getAfternoonEndTime() : null
         );
     }
 
