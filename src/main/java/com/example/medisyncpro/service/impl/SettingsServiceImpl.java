@@ -48,6 +48,19 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
     @Override
+    public SettingsDTO getSettingsByIdDto(String authHeader) throws Exception {
+        Long clinicIdAuth = this.authHeaderService.getClinicId(authHeader);
+
+        try {
+            return settingsRepository.findByClinicId(clinicIdAuth)
+                    .map(settingsMapper::toDTO)
+                    .orElseThrow(() -> new SettingsException("Settings not found with id: " + clinicIdAuth));
+        } catch (Exception e) {
+            throw new SettingsException("Error retrieving settings by id: " + clinicIdAuth, e);
+        }
+
+    }
+    @Override
     public Settings saveSettings(Settings settings, String authHeader) throws Exception {
         Long clinicIdAuth = this.authHeaderService.getClinicId(authHeader);
 

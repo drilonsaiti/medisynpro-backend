@@ -44,9 +44,10 @@ public class ReceptionistServiceImpl implements ReceptionistService {
     }
 
     @Override
-    public List<Receptionist> getAll() {
+    public List<Receptionist> getAll(String authHeader) throws Exception {
+        Long clinicId = authHeaderService.getClinicId(authHeader);
         try {
-            return receptionistRepository.findAll();
+            return receptionistRepository.findAllByClinicId(clinicId);
         } catch (Exception e) {
             throw new ReceptionistException("Error retrieving all receptionists,try again");
         }
@@ -167,10 +168,11 @@ public class ReceptionistServiceImpl implements ReceptionistService {
     @Override
     public ReceptionistDto getReceptionistProfile(String authHeader) throws Exception {
         String email = this.authHeaderService.getEmail(authHeader);
-        return this.receptionistRepository.findByEmailAddress(email).map(receptionist -> {
-            Clinic clinic = clinicRepository.findByClinicId(receptionist.getClinicId()).orElseThrow(() -> new ClinicException(String.format("Clinic with id: %d not found", receptionist.getClinicId())));
-            String clinicName = clinic != null ? clinic.getClinicName() : "Unemployed";
-            return receptionistMapper.getReceptionistById(receptionist, clinicName);
-        }).orElse(null);
+        Receptionist receptionist = this.receptionistRepository.findByEmailAddress(email).orElse(null);
+        Clinic clinic = clinicRepository.findByClinicId(receptionist.getClinicId()).orElse(null);
+        String clinicName = clinic != null ? clinic.getClinicName() : "Unemployed";
+
+        return receptionistMapper.getReceptionistById(receptionist, clinicName);
+
     }
 }

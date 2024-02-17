@@ -26,6 +26,7 @@ public class MedicalReportMapper {
                 patientEmail,
                 report.getDoctor().getDoctorName(),
                 report.getDoctor().getDoctorId(),
+                report.getDoctor().getEmail(),
                 report.getAppointmentDate(),
                 services,
                 totalPrice

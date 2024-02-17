@@ -14,7 +14,7 @@ public interface ReceptionistService {
 
     ReceptionistDto getByIdDto(Long id);
 
-    List<Receptionist> getAll();
+    List<Receptionist> getAll(String authHeader) throws Exception;
 
     List<Receptionist> getAllByClinicId(Long clinicId,String authHeader) throws Exception;
 

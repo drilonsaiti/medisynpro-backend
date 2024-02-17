@@ -38,4 +38,6 @@ public class AppointmentDto {
 
     private boolean attended;
     private MedicalReportDto report;
+
+
 }

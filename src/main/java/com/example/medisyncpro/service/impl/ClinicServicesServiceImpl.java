@@ -115,9 +115,9 @@ public class ClinicServicesServiceImpl implements ClinicServicesService {
 
 
     @Override
-    public List<ServiceForClinicsDto> getClinicServiceForClinic() {
+    public List<ClinicServices> getClinicServiceForClinic() {
         try {
-            return serviceRepository.findAll().stream().map(service -> new ServiceForClinicsDto(service.getServiceId(), service.getServiceName())).toList();
+            return serviceRepository.findAll();
         } catch (Exception e) {
             throw new ClinicServicesException("Error getting clinic services for clinic", e);
         }

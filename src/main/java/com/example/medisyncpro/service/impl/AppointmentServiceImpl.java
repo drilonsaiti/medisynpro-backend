@@ -254,21 +254,19 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment createAppointmentByReceptionist(AppointmentByReceptionistDto dto,String authHeader) throws ClinicAppointmentException {
         Receptionist r = this.receptionistRepository.findByEmailAddress(this.authHeaderService.getEmail(authHeader)).orElse(null);
 
-        if (r != null && Objects.equals(r.getClinicId(), dto.getClinicId())) {
             try {
                 CreatePatientDto createPatientDto = new CreatePatientDto(dto.getPatientName(), dto.getGender(), dto.getAddress(), dto.getContactNumber(), dto.getEmail(), dto.getBirthDay());
                 Patient patient = patientService.save(createPatientDto);
-                ClinicSchedule clinicSchedule = clinicScheduleRepository.findClinicScheduleByClinicIdAndStartTime(dto.getClinicId(), dto.getAppointment());
+                ClinicSchedule clinicSchedule = clinicScheduleRepository.findClinicScheduleByClinicIdAndStartTime(r.getClinicId(), dto.getAppointment());
 
-                CreateAppointmentDto createAppointmentDto = new CreateAppointmentDto(patient.getPatientId(), clinicSchedule.getDoctorId(), dto.getClinicId(), dto.getAppointment(), dto.getServiceId());
+                CreateAppointmentDto createAppointmentDto = new CreateAppointmentDto(patient.getPatientId(), clinicSchedule.getDoctorId(), r.getClinicId(), dto.getAppointment(), dto.getServiceId());
                 clinicSchedule.setIsBooked(true);
                 clinicScheduleRepository.save(clinicSchedule);
                 return this.save(createAppointmentDto, "");
             } catch (Exception e) {
                 throw new ClinicAppointmentException("Failed to create appointment", e);
             }
-        }
-        throw new ClinicAppointmentException("You don't have access!");
+
     }
 
     @Override

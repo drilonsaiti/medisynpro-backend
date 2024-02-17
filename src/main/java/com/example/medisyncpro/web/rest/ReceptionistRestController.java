@@ -27,10 +27,12 @@ public class ReceptionistRestController {
     private final ClinicService clinicService;
 
     @GetMapping
-    public ResponseEntity<?> listReceptionists() {
-        Iterable<Receptionist> receptionists = receptionistService.getAll();
+    public ResponseEntity<?> listReceptionists(HttpServletRequest request) throws Exception {
+        final String authHeader = request.getHeader("Authorization");
+        Iterable<Receptionist> receptionists = receptionistService.getAll(authHeader);
         return new ResponseEntity<>(receptionists, HttpStatus.OK);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getReceptionistById(@PathVariable Long id) {

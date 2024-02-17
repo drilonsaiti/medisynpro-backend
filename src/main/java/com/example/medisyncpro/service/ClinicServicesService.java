@@ -22,5 +22,4 @@ public interface ClinicServicesService {
 
     List<ClinicServices> findAllBySpecializationsId(Long id);
 
-    List<ServiceForClinicsDto> getClinicServiceForClinic();
-}
+    List<ClinicServices> getClinicServiceForClinic();}

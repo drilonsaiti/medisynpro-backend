@@ -130,7 +130,7 @@ public class ClinicScheduleServiceImpl implements ClinicScheduleService {
             Settings settings = settingsRepository.getById(settingsId);
             LocalDate currentDate = LocalDate.now();
 
-            if(clinicId == settings.getClinicId()) {
+            if (Objects.equals(clinicId, settings.getClinicId())) {
                 for (int i = 0; i < settings.getDaysToGenerate(); i++) {
                     LocalDateTime currentDateTime = LocalDateTime.of(currentDate, settings.getMorningStartTime());
 
@@ -158,6 +158,7 @@ public class ClinicScheduleServiceImpl implements ClinicScheduleService {
                 this.clinicScheduleRepository.saveAll(schedules);
                 return schedules;
             }
+
         } catch (Exception e) {
             throw new ClinicScheduleException("Error generating schedules", e);
         }

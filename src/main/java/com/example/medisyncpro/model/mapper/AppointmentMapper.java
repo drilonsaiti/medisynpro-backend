@@ -52,13 +52,13 @@ public class AppointmentMapper {
                 patient.getContactNumber(),
                 patient.getBirthDay(),
                 doctor.getDoctorName(),
-                doctor.getSpecialization().getSpecializationName(),
+                doctor.getSpecialization() != null ? doctor.getSpecialization().getSpecializationName() : "",
                 doctor.getImageUrl(),
                 appm.getClinicId(),
                 clinicName,
                 appm.getDate(),
                 services,
-                false,
+                appm.isAttended(),
                 report
         );
     }

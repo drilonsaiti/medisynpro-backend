@@ -43,6 +43,19 @@ public class SettingsRestController {
         }
     }
 
+    @GetMapping("/getSettings")
+    public ResponseEntity<?> getSettingsByIdDto(HttpServletRequest request) {
+        try {
+            final String authHeader = request.getHeader("Authorization");
+            SettingsDTO settings = settingsService.getSettingsByIdDto(authHeader);
+            return new ResponseEntity<>(settings, HttpStatus.OK);
+        } catch (SettingsException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> createSettings(@RequestBody Settings settings,HttpServletRequest request) {
         try {

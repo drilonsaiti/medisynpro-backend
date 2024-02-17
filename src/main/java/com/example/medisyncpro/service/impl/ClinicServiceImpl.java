@@ -134,32 +134,30 @@ public class ClinicServiceImpl implements ClinicService {
     public Clinic updateClinic(UpdateClinicDto dto, String auth) throws Exception {
         Long clinicId = this.authHeaderService.getClinicId(auth);
 
-        if (Objects.equals(clinicId, dto.getClinicId())) {
 
-            try {
-                List<Long> serviceIds = dto.getServiceDto().stream()
-                        .map(ServiceForClinicsDto::getServiceId)
-                        .toList();
 
-                List<ClinicServices> clinicServices = serviceRepository.findAll().stream()
-                        .filter(srv -> serviceIds.contains(srv.getServiceId()))
-                        .toList();
+        try {
+            List<Long> serviceIds = dto.getServiceDto().stream()
+                    .map(ServiceForClinicsDto::getServiceId)
+                    .toList();
 
-                List<Long> doctorIds = dto.getDoctors().stream()
-                        .map(DoctorForClinicDto::getDoctorId)
-                        .toList();
+            List<ClinicServices> clinicServices = serviceRepository.findAll().stream()
+                    .filter(srv -> serviceIds.contains(srv.getServiceId()))
+                    .toList();
 
-                List<Doctor> doctors = doctorRepository.findAll().stream()
-                        .filter(srv -> doctorIds.contains(srv.getDoctorId()))
-                        .toList();
+            List<Long> doctorIds = dto.getDoctors().stream()
+                    .map(DoctorForClinicDto::getDoctorId)
+                    .toList();
 
-                Clinic clinic = this.getById(dto.getClinicId());
-                return clinicRepository.save(clinicMapper.updateClinic(clinic, dto, clinicServices, doctors));
-            } catch (Exception e) {
-                throw new ClinicException("Failed to update clinic", e);
-            }
+            List<Doctor> doctors = doctorRepository.findAll().stream()
+                    .filter(srv -> doctorIds.contains(srv.getDoctorId()))
+                    .toList();
+
+            Clinic clinic = this.getById(clinicId);
+            return clinicRepository.save(clinicMapper.updateClinic(clinic, dto, clinicServices, doctors));
+        } catch (Exception e) {
+            throw new ClinicException("Failed to update clinic", e);
         }
-        throw new ClinicException("You don't have access");
 
     }
 

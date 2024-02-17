@@ -23,7 +23,7 @@ public class MedicalReportDto {
 
     private String doctorName;
     private Long doctorId;
-    /*private String doctorEmail;*/
+    private String doctorEmail;
     private LocalDateTime appointmentDate;
     private List<ServiceDto> services;
     private int totalPrice;
