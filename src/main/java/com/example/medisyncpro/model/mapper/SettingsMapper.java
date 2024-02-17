@@ -57,7 +57,7 @@ public class SettingsMapper {
         settings.setAppointmentDurationMinutes(dto.getAppointmentDurationMinutes());
         settings.setDaysToGenerate(dto.getDaysToGenerate());
         List<Doctor> morningDoctors = new ArrayList<>();
-        if (!settings.getMorningDoctors().isEmpty() || !dto.getMorningDoctors().isEmpty()) {
+        if (!settings.getMorningDoctors().isEmpty() || dto.getMorningDoctors() != null) {
             settings.getMorningDoctors().clear();
             morningDoctors = dto.getMorningDoctors().stream()
                     .filter(doc -> doc.getDoctorId() != null)
@@ -68,7 +68,7 @@ public class SettingsMapper {
         settings.getMorningDoctors().addAll(morningDoctors);
 
         List<Doctor> afternoonDoctors = new ArrayList<>();
-        if (!settings.getAfternoonDoctors().isEmpty() || !dto.getAfternoonDoctors().isEmpty()) {
+        if (!settings.getAfternoonDoctors().isEmpty() || dto.getAfternoonDoctors() != null) {
             settings.getAfternoonDoctors().clear();
             afternoonDoctors = dto.getAfternoonDoctors().stream()
                     .filter(doc -> doc.getDoctorId() != null)
