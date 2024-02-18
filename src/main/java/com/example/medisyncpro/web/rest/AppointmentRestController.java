@@ -25,7 +25,7 @@ public class AppointmentRestController {
     public ResponseEntity<?> listAppointments(@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "all") String nameOrEmail,
                                               @RequestParam(defaultValue = "all") String types,
-                                              HttpServletRequest request) {
+                                              HttpServletRequest request) throws Exception {
         final String authHeader = request.getHeader("Authorization");
         PageRequest pageable = PageRequest.of(page - 1, 15);
         AppointmentResultDto appointments = appointmentService.getAll(pageable, nameOrEmail, types,authHeader);

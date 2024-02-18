@@ -52,16 +52,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public AppointmentResultDto getAll(PageRequest pageable, String nameOrEmail, String types,String authHeader) throws ClinicAppointmentException {
-
+    public AppointmentResultDto getAll(PageRequest pageable, String nameOrEmail, String types,String authHeader) throws Exception {
+        Long clinicId = authHeaderService.getClinicId(authHeader);
         List<AppointmentDto> appointment = appointmentRepository.findAll().stream()
-                .filter(a -> {
-                    try {
-                        return Objects.equals(authHeaderService.getClinicId(authHeader), a.getClinicId());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
+                .filter(a -> Objects.equals(a.getClinicId(), clinicId))
                 .filter(a -> a.getDate().toLocalDate().isEqual(LocalDate.now()) || a.getDate().toLocalDate().isAfter(LocalDate.now()))
                 .filter(a -> {
                     Patient p = this.patientService.getById(a.getPatientId());
@@ -126,9 +120,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<AppointmentDto> getAllByPatient(Long id,String authHeader) throws ClinicAppointmentException {
         Patient p = this.patientRepository.findByEmail(this.authHeaderService.getEmail(authHeader));
-        if(p.getPatientId() == id) {
             try {
-                return appointmentRepository.findAllByPatientId(id).stream().map(appm -> {
+                return appointmentRepository.findAllByPatientId(p.getPatientId()).stream().map(appm -> {
                     try {
                         Patient patient = patientService.getById(appm.getPatientId());
                         Doctor doctor = this.doctorRepository.getById(appm.getDoctorId());
@@ -148,16 +141,13 @@ public class AppointmentServiceImpl implements AppointmentService {
             } catch (Exception e) {
                 throw new ClinicAppointmentException("Failed to retrieve appointments by patient ID " + id, e);
             }
-        }
-        throw new PatientException("You don't have access to this user!");
     }
 
     @Override
     public List<AppointmentDto> getAllByDoctor(Long id,String authHeader) throws ClinicAppointmentException {
         Doctor d = this.doctorRepository.findByEmail(this.authHeaderService.getEmail(authHeader)).orElse(null);
-        if(d != null && Objects.equals(d.getDoctorId(), id)) {
             try {
-                return appointmentRepository.findAllByDoctorId(id).stream().map(appm -> {
+                return appointmentRepository.findAllByDoctorId(d.getDoctorId()).stream().map(appm -> {
                     Patient patient = patientService.getById(appm.getPatientId());
                     Doctor doctor = this.doctorRepository.getById(appm.getDoctorId());
                     MedicalReport report = this.reportRepository.findByAppointmentId(appm.getAppointmentId()).orElse(null);
@@ -178,15 +168,13 @@ public class AppointmentServiceImpl implements AppointmentService {
             } catch (Exception e) {
                 throw new ClinicAppointmentException("Failed to retrieve appointments by doctor ID " + id, e);
             }
-        }
-            throw new PatientException("You don't have access to this user!");
     }
 
     @Override
     public Appointment save(CreateAppointmentDto appointment,String authHeader) {
         try {
             if(authHeader.isEmpty()) {
-                Patient patient = this.patientRepository.findByEmail(authHeaderService.getEmail(authHeader));
+                Patient patient = this.patientRepository.findById(appointment.getPatientId()).orElse(null);
                 ClinicSchedule clinicSchedule = clinicScheduleRepository.findClinicScheduleByClinicIdAndStartTime(appointment.getClinicId(), appointment.getDate());
 
                 CreateAppointmentDto createAppointmentDto = new CreateAppointmentDto(patient.getPatientId(), clinicSchedule.getDoctorId(), appointment.getClinicId(), appointment.getDate(),

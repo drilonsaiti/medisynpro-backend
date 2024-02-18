@@ -10,7 +10,7 @@ public interface AppointmentService {
 
     Appointment getById(Long id,String authHeader);
 
-    AppointmentResultDto getAll(PageRequest pageable, String nameOrEmail, String types,String authHeader);
+    AppointmentResultDto getAll(PageRequest pageable, String nameOrEmail, String types,String authHeader) throws Exception;
 
     AppointmentResultDto getMyAppointment(PageRequest pageable,String authHeader);
 

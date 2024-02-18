@@ -52,7 +52,6 @@ public class DoctorServiceImpl implements DoctorService {
 
             List<Doctor> doctors = doctorRepository.findAll()
                     .stream()
-                    .filter(d -> Objects.equals(d.getClinic().getClinicId(), clinicIdAuth))
                     .filter(doctor ->
                             (specializations.equals("all") || Arrays.asList(specs).contains(doctor.getSpecialization().getSpecializationName()))
 

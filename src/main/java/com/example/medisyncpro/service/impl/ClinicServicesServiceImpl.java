@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,8 +58,13 @@ public class ClinicServicesServiceImpl implements ClinicServicesService {
     public ClinicServicesResultDto getAll(PageRequest pageable, String specialization, String sort) {
         try {
             String[] specs = specialization.split(",");
-            List<ClinicServices> services = serviceRepository.findAll().stream().filter(service ->
-                            (specialization.equals("all") || Arrays.asList(specs).contains(service.getSpecializations().getSpecializationName())))
+            List<ClinicServices> services = serviceRepository.findAll().stream()
+                    .filter(service ->
+                            (specialization.equals("all") || Arrays.asList(specs).contains(
+                                    Optional.ofNullable(service.getSpecializations())
+                                            .map(Specializations::getSpecializationName)
+                                            .orElse("")
+                            )))
                     .sorted((a, b) -> {
                         String[] sortBy = sort.split("-");
                         String field = sortBy[0];
@@ -67,7 +73,8 @@ public class ClinicServicesServiceImpl implements ClinicServicesService {
                         Comparable fieldB = getFieldValue(b, field);
 
                         return direction.equals("asc") ? fieldA.compareTo(fieldB) : fieldB.compareTo(fieldA);
-                    }).toList();
+                    })
+                    .toList();
 
             return new ClinicServicesResultDto(services.stream().skip(pageable.getOffset()).limit(pageable.getPageSize()).toList(), services.size());
         } catch (Exception e) {
